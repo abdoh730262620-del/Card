@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Global employee invitations index for automatic email-based linking
+    match /employee_invites/{email} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // User Profile Document and all its user-scoped subcollections
+    // Allows owner (manager) and authenticated linked users (employees) to read and write
+    match /users/{userId} {
+      allow read, write: if isAuthenticated();
+      match /{document=**} {
+        allow read, write: if isAuthenticated();
+      }
+    }
+  }
+}

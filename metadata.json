@@ -1,0 +1,6 @@
+{
+  "name": "إدارة حسابات الكروت",
+  "description": "نظام احترافي شامل لإدارة حسابات كروت الشبكات والموزعين والمبيعات والعهد والصناديق وسندات القبض والصرف",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

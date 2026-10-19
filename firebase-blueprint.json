@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile document stored at root",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["userId", "email", "createdAt"]
+    },
+    "DistributorSync": {
+      "title": "DistributorSync",
+      "description": "Distributor synced record per user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "currentBalance": { "type": "number" },
+        "creditLimit": { "type": "number" },
+        "paymentPeriodDays": { "type": "integer" },
+        "lastPaymentDate": { "type": "integer" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "integer" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["userId", "name", "createdAt"]
+    },
+    "CardCategorySync": {
+      "title": "CardCategorySync",
+      "description": "Network card category synced record per user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "faceValue": { "type": "number" },
+        "costPrice": { "type": "number" },
+        "sellingPrice": { "type": "number" },
+        "stockQuantity": { "type": "integer" },
+        "validityHours": { "type": "integer" },
+        "quotaMb": { "type": "integer" }
+      },
+      "required": ["userId", "name", "sellingPrice"]
+    },
+    "CashRegisterSync": {
+      "title": "CashRegisterSync",
+      "description": "Cash register record per user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "currentBalance": { "type": "number" },
+        "openingBalance": { "type": "number" },
+        "totalInflows": { "type": "number" },
+        "totalOutflows": { "type": "number" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["userId", "name", "type", "createdAt"]
+    },
+    "TransactionSync": {
+      "title": "TransactionSync",
+      "description": "Transaction invoice or voucher record per user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "type": { "type": "string" },
+        "distributorName": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "unitPrice": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "discount": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "remainingAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "date": { "type": "integer" },
+        "employeeName": { "type": "string" }
+      },
+      "required": ["userId", "invoiceNumber", "type", "totalAmount", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "UserProfile" },
+      "description": "User profile document"
+    },
+    "/users/{userId}/distributors/{distributorId}": {
+      "schema": { "$ref": "DistributorSync" },
+      "description": "User network distributors"
+    },
+    "/users/{userId}/categories/{categoryId}": {
+      "schema": { "$ref": "CardCategorySync" },
+      "description": "User network card categories"
+    },
+    "/users/{userId}/registers/{registerId}": {
+      "schema": { "$ref": "CashRegisterSync" },
+      "description": "User cash registers"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": { "$ref": "TransactionSync" },
+      "description": "User invoices, vouchers and transactions"
+    }
+  }
+}
